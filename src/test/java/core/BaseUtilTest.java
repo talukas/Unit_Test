@@ -4,174 +4,204 @@ import org.testng.annotations.Test;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertSame;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
+
+import org.hamcrest.Matcher;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.testng.Assert;
 
 public class BaseUtilTest {
-	
+
 	BaseUtil b = new BaseUtil();
-	
+	String expire;
+
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
 	@Test
 
-	public void test_1()
-	{
-		String expire = null;
-		
-		System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertFalse(b.monthYearParsExpire(expire));	
+	public void test_1() {
+		expire = null;
+		System.out.println(convertStringArrayToObject(b.monthYearParsExpire(expire)));
+		b.monthYearParsExpire(expire);
+		assertNull(convertStringArrayToObject(b.monthYearParsExpire(expire)));
 	}
 
 
 	@Test
-	public void test_2()
-	{
-		String expire = "";
-		
-		System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertFalse(b.monthYearParsExpire(expire));	
+	public void test_2() {
+		exception.expect(NullPointerException.class);
+		expire = "";
+		System.out.println(convertStringArrayToObject(b.monthYearParsExpire(expire)));
+		b.monthYearParsExpire(expire);
+		assertNull(convertStringArrayToObject(b.monthYearParsExpire(expire)));
 	}
-	
-	
+
 	@Test
 	public void test_3() {
 
-		String expire = "206";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));	
-	}
-	
+		expire = "226";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
 
-	@Test 
-    public void test_4() {
-		
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("February - 022026", instanceOf(String.class));
+		Assert.assertEquals("February - 022026", convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+	}
+
+	@Test
+	public void test_4() {
+
 		try {
-			String expire = "12";
-			b.monthYearParsExpire(expire);}
-		catch (Exception e) {	
-		assertThat(e.getMessage(), is ("Unknown Expired [12] for credit card"));
-		}
-		}
-	
+			expire = "12";
+			b.monthYearParsExpire(expire);
+		} catch (IllegalArgumentException e) {
+			assertThat(e.getMessage(), containsString("Unknown Expired [12] for credit card"));}
+	}
 
 	@Test
 	public void test_5() {
 
-		String expire = "0126";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));	
+		expire = "126";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("January - 012026", instanceOf(String.class));
+		Assert.assertEquals("January - 012026", convertStringArrayToString(b.monthYearParsExpire(expire)));
+
 	}
-	
+
 	@Test
 	public void test_6() {
 
-		String expire = "0326";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));	
+		expire = "0326";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("March - 032026", instanceOf(String.class));
+		Assert.assertEquals("March - 032026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
-	
+
 	@Test
 	public void test_7() {
 
-		String expire = "0426";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+		expire = "0426";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("April - 042026", instanceOf(String.class));
+		Assert.assertEquals("April - 042026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
-	
+
 	@Test
 	public void test_8() {
 
-		String expire = "0526";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+		expire = "0526";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("May - 052026", instanceOf(String.class));
+		Assert.assertEquals("May - 052026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
 
 	@Test
 	public void test_9() {
 
-		String expire = "0626";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+		expire = "0626";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("June - 062026", instanceOf(String.class));
+		Assert.assertEquals("June - 062026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
 
 	@Test
 	public void test_10() {
 
-		String expire = "0726";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+		expire = "0726";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("July - 072026", instanceOf(String.class));
+		Assert.assertEquals("July - 072026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
 
 	@Test
 	public void test_11() {
 
-		String expire = "0826";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+		expire = "0826";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("August - 082026", instanceOf(String.class));
+		Assert.assertEquals("August - 082026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
 
 	@Test
 	public void test_12() {
 
-		String expire = "0926";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+		expire = "0926";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("September - 092026", instanceOf(String.class));
+		Assert.assertEquals("September - 092026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
 
 	@Test
 	public void test_13() {
 
-		String expire = "1026";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+		expire = "1026";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("October - 102026", instanceOf(String.class));
+		Assert.assertEquals("October - 102026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
 
 	@Test
 	public void test_14() {
-		
-		String expire = "1126";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
+
+		expire = "1126";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
+
+		assertNotNull(b.monthYearParsExpire(expire));
+		assertThat("November - 112026", instanceOf(String.class));
+		Assert.assertEquals("November - 112026", convertStringArrayToString(b.monthYearParsExpire(expire)));
 	}
-	
-	
+
 	@Test
 	public void test_15() {
 
-		
-		String expire = "January - 1";
-		//System.out.println(convertStringArrayToString(b.monthYearParsExpire(expire)));
-		
-		assertTrue(b.monthYearParsExpire(expire));
-	}
+		String monthExpireParsed = "December - 12 ";
+		// System.out.println(convertStringArrayToString(b.monthYearParsExpire(monthExpireParsed)));
 
+		assertNotNull(b.monthYearParsExpire(monthExpireParsed));
+		assertThat("December - 122026", instanceOf(String.class));
+		Assert.assertEquals("December - 122026", convertStringArrayToString(b.monthYearParsExpire(monthExpireParsed)));
+	}
 
 	@Test
 	public void test_16() {
-		
+
 		try {
-			
-			String expire = "1326";
-			b.monthYearParsExpire(expire);}
-		catch (Exception e) {	
-		assertThat(e.getMessage(), is ("Unknown Month [13]"));			
+			expire = "1326";
+			b.monthYearParsExpire(expire);
+		} catch (IllegalArgumentException e) {
+			assertThat(e.getMessage(), containsString("Unknown Month [13]"));
 		}
 	}
 
 	@Test
 	public void test_17() {
-		
+
 		String tmp = null;
 
 		Assert.assertFalse(b.isParamUseful(tmp));
@@ -179,44 +209,38 @@ public class BaseUtilTest {
 
 	@Test
 	public void test_18() {
-		
+
 		String tmp = "Ja";
 
 		Assert.assertTrue(b.isParamUseful(tmp));
 	}
-	
+
 	@Test
 	public void test_19() {
-		
+
 		String tmp = " ";
 
 		Assert.assertFalse(b.isParamUseful(tmp));
 	}
-	
-	
+
 	@Test
 	public void test_20() {
-		
+
 		String tmp = "";
 
 		Assert.assertFalse(b.isParamUseful(tmp));
 	}
-	
-	
-		public String
-		convertStringArrayToString(String[] strArr) {
+
+	public String convertStringArrayToString(String[] strArr) {
 		StringBuilder sb = new StringBuilder();
-		for(String str : strArr) sb.append(str);
+		for (String str : strArr)
+			sb.append(str);
 		return sb.toString();
 	}
-		
-		private void assertFalse(String[] monthYearParsExpire) {
-			// TODO Auto-generated method stub
-		}
-		
-		private void assertTrue(String[] monthYearParsExpire) {
-			// TODO Auto-generated method stub	
-		}
 	
-}
+	private Object convertStringArrayToObject(String[] monthYearParsExpire) {
+		// TODO Auto-generated method stub
+		return null;
 
+}
+	}
